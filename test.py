@@ -3,9 +3,7 @@ import clip
 from PIL import Image
 
 print('Loading models...')
-device = "cpu"  # Change to "cuda" if using a GPU
-# model = torch.load("vision_model.pt", map_location=device,weights_only=False)
-# model.eval()  # Set to evaluation mode
+device = "cpu"
 
 model, preprocess = clip.load("ViT-B/32", device=device)  # Ensure same model variant
 
