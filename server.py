@@ -1,4 +1,5 @@
 from flask import Flask,jsonify,request,render_template
+from flask_cors import cross_origin
 import torch
 import clip,io
 from PIL import Image
@@ -9,14 +10,15 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+
 @app.route("/process", methods=["POST"])
+@cross_origin()
 def process(threshold=25):
     if "image" not in request.files or "description" not in request.form:
         return jsonify({"error": "Image and description are required"}), 400
     
     image_file = request.files.get('image')
     text = request.form.get('description')
-    print(text,image_file)
 
     if image_file.filename == "":
         return jsonify({"error": "No selected file"}), 400
