@@ -1,10 +1,11 @@
 from flask import Flask,jsonify,request,render_template
-from flask_cors import cross_origin
+from flask_cors import CORS
 import torch
 import clip,io
 from PIL import Image
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -12,7 +13,6 @@ def home():
 
 
 @app.route("/process", methods=["POST"])
-@cross_origin()
 def process(threshold=25):
     if "image" not in request.files or "description" not in request.form:
         return jsonify({"error": "Image and description are required"}), 400
