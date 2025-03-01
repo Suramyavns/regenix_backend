@@ -7,6 +7,14 @@ from PIL import Image
 app = Flask(__name__)
 CORS(app)
 
+
+print('Loading models...')
+device = "cpu"
+
+model, preprocess = clip.load("ViT-B/32", device=device)  # Ensure same model variant
+
+print('Model and Preprocess instance are loaded')
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -47,11 +55,5 @@ def process(threshold=25):
 
 
 if __name__=='__main__':
-    print('Loading models...')
-    device = "cpu"
-
-    model, preprocess = clip.load("ViT-B/32", device=device)  # Ensure same model variant
-
-    print('Model and Preprocess instance are loaded')
 
     app.run(port=9090,debug=True)
